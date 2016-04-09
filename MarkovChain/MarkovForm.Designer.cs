@@ -1,6 +1,6 @@
 ﻿namespace MarkovChain
 {
-    partial class Form1
+    partial class MarkovForm
     {
         /// <summary>
         /// Required designer variable.
@@ -43,6 +43,7 @@
             this.AnalyzeButton.TabIndex = 0;
             this.AnalyzeButton.Text = "Analyze Markov Chain";
             this.AnalyzeButton.UseVisualStyleBackColor = true;
+            this.AnalyzeButton.Click += new System.EventHandler(this.AnalyzeButton_Click);
             // 
             // InputLabel
             // 
@@ -55,9 +56,10 @@
             // 
             // InputBox
             // 
-            this.InputBox.Location = new System.Drawing.Point(60, 64);
+            this.InputBox.Location = new System.Drawing.Point(60, 29);
             this.InputBox.Multiline = true;
             this.InputBox.Name = "InputBox";
+            this.InputBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.InputBox.Size = new System.Drawing.Size(594, 235);
             this.InputBox.TabIndex = 2;
             // 
@@ -66,6 +68,7 @@
             this.OutputBox.Location = new System.Drawing.Point(60, 374);
             this.OutputBox.Multiline = true;
             this.OutputBox.Name = "OutputBox";
+            this.OutputBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.OutputBox.Size = new System.Drawing.Size(594, 151);
             this.OutputBox.TabIndex = 3;
             // 
@@ -78,7 +81,7 @@
             this.label2.TabIndex = 4;
             this.label2.Text = "Output";
             // 
-            // Form1
+            // MarkovForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -88,8 +91,8 @@
             this.Controls.Add(this.InputBox);
             this.Controls.Add(this.InputLabel);
             this.Controls.Add(this.AnalyzeButton);
-            this.Name = "Form1";
-            this.Text = "Form1";
+            this.Name = "MarkovForm";
+            this.Text = "Markov Chain Analysis";
             this.ResumeLayout(false);
             this.PerformLayout();
 

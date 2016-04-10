@@ -1,14 +1,26 @@
-﻿using System;
+﻿using com.sun.tools.javac.util;
+using edu.stanford.nlp.ling;
+using edu.stanford.nlp.pipeline;
+using edu.stanford.nlp.semgraph;
+using edu.stanford.nlp.tagger.maxent;
+using edu.stanford.nlp.trees;
+using edu.stanford.nlp.util;
+using java.io;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static edu.stanford.nlp.ling.CoreAnnotations;
+using static edu.stanford.nlp.trees.TreeCoreAnnotations;
+using Console = System.Console;
 
 namespace MarkovChain
 {
@@ -23,17 +35,26 @@ namespace MarkovChain
         {
             Dictionary<string, Dictionary<string, int>> wordDict = BuildWordDict(InputBox.Text);
 
+            wordDict = BuildWordDict(InputBox2.Text, wordDict);
+
             int outputLength = 1000;
             StringBuilder chain = new StringBuilder("");
-            string currentWord = "I";
-            Random r = new Random();
+            System.Random r = new System.Random();
+            // string currentWords[] = new string[]{ "In", "a" };
+            Queue<string> currentWords = new Queue<string>();
+            currentWords.Enqueue("In");
+            currentWords.Enqueue("a");
+
             for (int i = 0; i < outputLength; i++)
             {
-                chain.Append(currentWord + " ");
-                currentWord = RetrieveRandomWord(wordDict[currentWord],r);
+                string dequeuedItem = currentWords.Dequeue();
+                chain.Append(dequeuedItem + " ");
+                currentWords.Enqueue(RetrieveRandomWord(wordDict[dequeuedItem + " " + currentWords.ElementAt(0)],r));
             }
 
             OutputBox.Text = chain.ToString();
+
+            Stanford.NLP.CoreNLP.CSharp.TaggerDemo.TagText(InputBox.Text);
         }
 
         private int WordListSum(Dictionary<string, int> wordList)
@@ -46,7 +67,7 @@ namespace MarkovChain
             return sum;
         }
 
-        private string RetrieveRandomWord(Dictionary<string,int> wordList, Random r)
+        private string RetrieveRandomWord(Dictionary<string,int> wordList, System.Random r)
         {
             int randIndex = r.Next(1, WordListSum(wordList));
 
@@ -63,10 +84,15 @@ namespace MarkovChain
 
         private Dictionary<string, Dictionary<string, int>> BuildWordDict(string text)
         {
+            return BuildWordDict(text, new Dictionary<string, Dictionary<string, int>>());
+        }
+
+        private Dictionary<string, Dictionary<string, int>> BuildWordDict(string text, Dictionary<string, Dictionary<string, int>> wordDict)
+        {
             text = text.Replace("\n", " ");
             text = text.Replace("\"", "");
 
-            string[] punctuation = new string[4] { ",", ".", ";", ":" };
+            string[] punctuation = new string[5] { ",", ".", ";", ":", "-" };
             foreach (string symbol in punctuation)
             {
                 text = text.Replace(symbol, " " + symbol + " ");
@@ -75,19 +101,44 @@ namespace MarkovChain
             string[] words = text.Split(null);
             words = words.Where(x => !string.IsNullOrEmpty(x)).ToArray();
 
-            Dictionary<string, Dictionary<string,int>> wordDict = new Dictionary<string, Dictionary<string,int>>();
-            for (int i = 1; i < words.Count(); i++) 
+            for (int i = 2; i < words.Count(); i++) 
             {
-                if (!wordDict.ContainsKey(words[i-1]))
+                if (!wordDict.ContainsKey(words[i-2] + " " + words[i-1]))
                 {
-                    wordDict.Add(words[i-1], new Dictionary<string, int>());
+                    wordDict.Add(words[i - 2] + " " + words[i - 1], new Dictionary<string, int>());
                 }
-                if (!wordDict[words[i - 1]].ContainsKey(words[i])){
-                    wordDict[words[i - 1]][words[i]] = 0;
+                if (!wordDict[words[i - 2] + " " + words[i - 1]].ContainsKey(words[i])){
+                    wordDict[words[i - 2] + " " + words[i - 1]][words[i]] = 0;
                 }
-                wordDict[words[i - 1]][words[i]] += 1;
+                wordDict[words[i - 2] + " " + words[i - 1]][words[i]] += 1;
             }
             return wordDict;
+        }
+
+        
+    }
+}
+
+namespace Stanford.NLP.CoreNLP.CSharp
+{
+    public static class TaggerDemo
+    {
+        public static void TagText(string text)
+        {
+            var jarRoot = "F:\\Visual Studio Projects\\MarkovChain\\MarkovChain\\obj\\Debug\\stanford-postagger-full-2015-12-09";
+            var modelsDirectory = jarRoot + "\\models";
+
+            // Loading POS Tagger
+            var tagger = new MaxentTagger(modelsDirectory + "\\wsj-0-18-bidirectional-nodistsim.tagger");
+
+            Console.WriteLine(tagger.tagString(text));
+            //var sentences = MaxentTagger.tokenizeText(new StringReader(text)).toArray();
+            //foreach (java.util.ArrayList sentence in sentences)
+            //{
+
+            //    var taggedSentence = tagger.tagSentence(sentence);
+            //    Console.WriteLine(Sentence.listToString(taggedSentence, false));
+            //}
         }
     }
 }

@@ -33,11 +33,12 @@
             this.InputBox = new System.Windows.Forms.TextBox();
             this.OutputBox = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
+            this.InputBox2 = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // AnalyzeButton
             // 
-            this.AnalyzeButton.Location = new System.Drawing.Point(271, 305);
+            this.AnalyzeButton.Location = new System.Drawing.Point(604, 307);
             this.AnalyzeButton.Name = "AnalyzeButton";
             this.AnalyzeButton.Size = new System.Drawing.Size(147, 23);
             this.AnalyzeButton.TabIndex = 0;
@@ -48,7 +49,7 @@
             // InputLabel
             // 
             this.InputLabel.AutoSize = true;
-            this.InputLabel.Location = new System.Drawing.Point(324, 13);
+            this.InputLabel.Location = new System.Drawing.Point(663, 9);
             this.InputLabel.Name = "InputLabel";
             this.InputLabel.Size = new System.Drawing.Size(31, 13);
             this.InputLabel.TabIndex = 1;
@@ -57,6 +58,7 @@
             // InputBox
             // 
             this.InputBox.Location = new System.Drawing.Point(60, 29);
+            this.InputBox.MaxLength = 0;
             this.InputBox.Multiline = true;
             this.InputBox.Name = "InputBox";
             this.InputBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
@@ -65,7 +67,7 @@
             // 
             // OutputBox
             // 
-            this.OutputBox.Location = new System.Drawing.Point(60, 374);
+            this.OutputBox.Location = new System.Drawing.Point(382, 374);
             this.OutputBox.Multiline = true;
             this.OutputBox.Name = "OutputBox";
             this.OutputBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
@@ -75,17 +77,28 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(324, 352);
+            this.label2.Location = new System.Drawing.Point(663, 346);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(39, 13);
             this.label2.TabIndex = 4;
             this.label2.Text = "Output";
             // 
+            // InputBox2
+            // 
+            this.InputBox2.Location = new System.Drawing.Point(702, 29);
+            this.InputBox2.MaxLength = 0;
+            this.InputBox2.Multiline = true;
+            this.InputBox2.Name = "InputBox2";
+            this.InputBox2.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.InputBox2.Size = new System.Drawing.Size(594, 235);
+            this.InputBox2.TabIndex = 5;
+            // 
             // MarkovForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(707, 537);
+            this.ClientSize = new System.Drawing.Size(1477, 537);
+            this.Controls.Add(this.InputBox2);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.OutputBox);
             this.Controls.Add(this.InputBox);
@@ -105,6 +118,7 @@
         private System.Windows.Forms.TextBox InputBox;
         private System.Windows.Forms.TextBox OutputBox;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.TextBox InputBox2;
     }
 }
 

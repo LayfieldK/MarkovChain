@@ -16,7 +16,7 @@ namespace MarkovChain
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new MarkovForm());
+            Application.Run(new MarkovPOSForm());
         }
     }
 }

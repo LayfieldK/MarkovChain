@@ -54,7 +54,7 @@ namespace MarkovChain
 
             OutputBox.Text = chain.ToString();
 
-            Stanford.NLP.CoreNLP.CSharp.TaggerDemo.TagText(InputBox.Text);
+            
         }
 
         private int WordListSum(Dictionary<string, int> wordList)
@@ -114,31 +114,8 @@ namespace MarkovChain
             }
             return wordDict;
         }
-
         
+
     }
 }
 
-namespace Stanford.NLP.CoreNLP.CSharp
-{
-    public static class TaggerDemo
-    {
-        public static void TagText(string text)
-        {
-            var jarRoot = "F:\\Visual Studio Projects\\MarkovChain\\MarkovChain\\obj\\Debug\\stanford-postagger-full-2015-12-09";
-            var modelsDirectory = jarRoot + "\\models";
-
-            // Loading POS Tagger
-            var tagger = new MaxentTagger(modelsDirectory + "\\wsj-0-18-bidirectional-nodistsim.tagger");
-
-            Console.WriteLine(tagger.tagString(text));
-            //var sentences = MaxentTagger.tokenizeText(new StringReader(text)).toArray();
-            //foreach (java.util.ArrayList sentence in sentences)
-            //{
-
-            //    var taggedSentence = tagger.tagSentence(sentence);
-            //    Console.WriteLine(Sentence.listToString(taggedSentence, false));
-            //}
-        }
-    }
-}
